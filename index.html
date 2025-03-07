@@ -1,149 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather.com</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-      }
-      body {
-        background-image: url(weather1.jpg);
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-      }
-      .container {
-        max-width: 90%;
-        width: 500px;
-        margin: 10% auto;
-        padding: 20px;
-        background: rgba(0, 0, 0, 0.5);
-        border-radius: 10px;
-      }
-      .inputs {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      .inputs input[type="text"] {
-        height: 2.5rem;
-        width: 100%;
-        font-size: 1rem;
-        padding: 10px;
-        border: 2px solid black;
-        border-radius: 30px;
-      }
-      .inputs input[type="submit"] {
-        height: 2.5rem;
-        width: 100%;
-        background: rgb(0, 162, 255);
-        font-weight: bold;
-        color: white;
-        font-size: 1rem;
-        border-radius: 30px;
-        border: none;
-        cursor: pointer;
-      }
-      .display {
-        text-align: center;
-        margin-top: 20px;
-      }
-      .wrapper {
-        padding: 15px;
-        border-radius: 10px;
-        background: white;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      }
-      .wrapper h2, .wrapper p {
-        color: black;
-      }
-      .wrapper span {
-        color: rgb(7, 119, 7);
-        font-size: 22px;
-      }
-      h1 {
-        color: white;
-        text-align: center;
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-      }
-      @media (max-width: 600px) {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-image: url(weather1.jpg);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
         .container {
-          width: 90%;
-          margin-top: 20%;
+            max-width: 90%;
+            width: 500px;
+            margin: 10% auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            color: white;
+            text-align: center;
         }
-        h1 {
-          font-size: 1.2rem;
+        .inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
-        .inputs input[type="text"],
+        .inputs input[type="text"] {
+            height: 2.5rem;
+            width: 100%;
+            font-size: 1rem;
+            padding: 10px;
+            border: 2px solid black;
+            border-radius: 30px;
+        }
         .inputs input[type="submit"] {
-          font-size: 0.9rem;
+            height: 2.5rem;
+            width: 100%;
+            background: rgb(0, 162, 255);
+            font-weight: bold;
+            color: white;
+            font-size: 1rem;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease; /* Smooth transition */
+        }
+        .inputs input[type="submit"]:hover {
+            background: rgb(0, 140, 230); /* Slightly darker blue on hover */
+        }
+        .display {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .wrapper {
+            padding: 15px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .wrapper h2, .wrapper p {
+            color: black;
         }
         .wrapper span {
-          font-size: 18px;
+            color: rgb(7, 119, 7);
+            font-size: 22px;
         }
-      }
+        h1 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+                margin-top: 15%;
+            }
+            h1 {
+                font-size: 1.2rem;
+            }
+            .inputs input[type="text"], .inputs input[type="submit"] {
+                font-size: 0.9rem;
+            }
+            .wrapper span {
+                font-size: 18px;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="container">
-      <h1>Weather.com</h1>
-      <section class="main">
-        <section class="inputs">
-          <input type="text" placeholder="Enter your city Name..." id="cityinput" />
-          <input type="submit" value="Submit" id="add" />
+        <h1>Weather.com</h1>
+        <section class="main">
+            <section class="inputs">
+                <input type="text" placeholder="Enter city name..." id="cityinput">
+                <input type="submit" value="Submit" id="add">
+            </section>
+            <section class="display">
+                <div class="wrapper">
+                    <h2 id="cityoutput"></h2>
+                    <p id="description"></p>
+                    <p id="temp"></p>
+                    <p id="wind"></p>
+                </div>
+            </section>
         </section>
-        <section class="display">
-          <div class="wrapper">
-            <h2 id="cityoutput"></h2>
-            <p id="description"></p>
-            <p id="temp"></p>
-            <p id="wind"></p>
-          </div>
-        </section>
-      </section>
     </div>
     <script>
-      var inputvalue = document.querySelector("#cityinput");
-      var btn = document.querySelector("#add");
-      var cityoutput = document.querySelector("#cityoutput");
-      var description = document.querySelector("#description");
-      var temp = document.querySelector("#temp");
-      var wind = document.querySelector("#wind");
-      var apiKey = "4de5be02c2439750e1d74f052a120068";
-      function convertTemperature(val) {
-        return (val - 273.15).toFixed(1);
-      }
-      btn.addEventListener("click", function () {
-        if (inputvalue.value.trim() === "") {
-          alert("Please enter a city name.");
-          return;
+        var inputvalue = document.querySelector("#cityinput");
+        var btn = document.querySelector("#add");
+        var cityoutput = document.querySelector("#cityoutput");
+        var description = document.querySelector("#description");
+        var temp = document.querySelector("#temp");
+        var wind = document.querySelector("#wind");
+        var apiKey = "4de5be02c2439750e1d74f052a120068"; // Your API Key
+        
+        function convertTemperature(val) {
+            return (val - 273.15).toFixed(1); // Convert Kelvin to Celsius
         }
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputvalue.value}&appid=${apiKey}`)
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.cod === "404") {
-              alert("City not found. Please try again.");
-              return;
+        
+        btn.addEventListener("click", function () {
+            var city = inputvalue.value.trim();
+            if (city === "") {
+                alert("Please enter a city name.");
+                return;
             }
-            var nameval = data.name;
-            var weatherDesc = data.weather[0].description;
-            var temperature = convertTemperature(data.main.temp);
-            var windSpeed = data.wind.speed;
-            cityoutput.innerHTML = `Weather of <span>${nameval}</span>`;
-            temp.innerHTML = `Temperature: <span>${temperature} °C</span>`;
-            description.innerHTML = `Sky conditions: <span>${weatherDesc}</span>`;
-            wind.innerHTML = `Wind speed: <span>${windSpeed} km/h</span>`;
-          })
-          .catch((err) => alert("An error occurred. Please try again."));
-      });
+
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log("API Response:", data); // Debugging
+
+                    if (data.cod === "404") {
+                        alert("City not found. Please try again.");
+                        return;
+                    }
+
+                    var nameval = data.name;
+                    var weatherDesc = data.weather[0].description;
+                    var temperature = convertTemperature(data.main.temp);
+                    var windSpeed = data.wind.speed;
+
+                    cityoutput.innerHTML = `Weather of <span>${nameval}</span>`;
+                    temp.innerHTML = `Temperature: <span>${temperature} °C</span>`;
+                    description.innerHTML = `Sky conditions: <span>${weatherDesc}</span>`;
+                    wind.innerHTML = `Wind speed: <span>${windSpeed} km/h</span>`;
+                })
+                .catch((err) => {
+                    console.error("Fetch Error:", err);
+                    alert("An error occurred. Please check your internet connection and try again.");
+                });
+        });
     </script>
-  </body>
+</body>
 </html>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
