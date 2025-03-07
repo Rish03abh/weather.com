@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Weather.com</title>
     <style>
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        font-family: Arial, sans-serif;
       }
       body {
         background-image: url(weather1.jpg);
@@ -18,28 +18,30 @@
         background-attachment: fixed;
       }
       .container {
-        max-width: 600px;
-        margin: 100px auto;
-        padding: 40px;
+        max-width: 90%;
+        width: 500px;
+        margin: 10% auto;
+        padding: 20px;
         background: rgba(0, 0, 0, 0.5);
         border-radius: 10px;
       }
       .inputs {
-        padding: 1rem 0;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
       }
       .inputs input[type="text"] {
-        height: 3rem;
-        width: 20rem;
-        font-weight: bold;
+        height: 2.5rem;
+        width: 100%;
         font-size: 1rem;
         padding: 10px;
         border: 2px solid black;
         border-radius: 30px;
       }
       .inputs input[type="submit"] {
-        height: 3rem;
-        width: 6rem;
+        height: 2.5rem;
+        width: 100%;
         background: rgb(0, 162, 255);
         font-weight: bold;
         color: white;
@@ -50,21 +52,15 @@
       }
       .display {
         text-align: center;
-        width: 100%;
         margin-top: 20px;
       }
       .wrapper {
-        padding: 20px;
+        padding: 15px;
         border-radius: 10px;
-        background: white; /* Added white background */
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Added slight shadow */
+        background: white;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
       }
-      .wrapper h2 {
-        padding: 10px;
-        color: black;
-      }
-      .wrapper p {
-        font-size: 20px;
+      .wrapper h2, .wrapper p {
         color: black;
       }
       .wrapper span {
@@ -74,6 +70,24 @@
       h1 {
         color: white;
         text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          width: 90%;
+          margin-top: 20%;
+        }
+        h1 {
+          font-size: 1.2rem;
+        }
+        .inputs input[type="text"],
+        .inputs input[type="submit"] {
+          font-size: 0.9rem;
+        }
+        .wrapper span {
+          font-size: 18px;
+        }
       }
     </style>
   </head>
@@ -85,7 +99,6 @@
           <input type="text" placeholder="Enter your city Name..." id="cityinput" />
           <input type="submit" value="Submit" id="add" />
         </section>
-
         <section class="display">
           <div class="wrapper">
             <h2 id="cityoutput"></h2>
@@ -96,7 +109,6 @@
         </section>
       </section>
     </div>
-
     <script>
       var inputvalue = document.querySelector("#cityinput");
       var btn = document.querySelector("#add");
@@ -105,17 +117,14 @@
       var temp = document.querySelector("#temp");
       var wind = document.querySelector("#wind");
       var apiKey = "4de5be02c2439750e1d74f052a120068";
-
       function convertTemperature(val) {
-        return (val - 273.15).toFixed(1); // Fixed Kelvin to Celsius conversion
+        return (val - 273.15).toFixed(1);
       }
-
       btn.addEventListener("click", function () {
         if (inputvalue.value.trim() === "") {
           alert("Please enter a city name.");
           return;
         }
-
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputvalue.value}&appid=${apiKey}`)
           .then((res) => res.json())
           .then((data) => {
@@ -123,12 +132,10 @@
               alert("City not found. Please try again.");
               return;
             }
-
             var nameval = data.name;
             var weatherDesc = data.weather[0].description;
             var temperature = convertTemperature(data.main.temp);
             var windSpeed = data.wind.speed;
-
             cityoutput.innerHTML = `Weather of <span>${nameval}</span>`;
             temp.innerHTML = `Temperature: <span>${temperature} °C</span>`;
             description.innerHTML = `Sky conditions: <span>${weatherDesc}</span>`;
@@ -139,3 +146,4 @@
     </script>
   </body>
 </html>
+
